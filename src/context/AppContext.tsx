@@ -2,7 +2,6 @@
 import {
 	createContext,
 	useState,
-	type PropsWithChildren,
 } from 'react';
 import { initialSpacesData } from '../data/initialSpacesData';
 import { AppContext, AppContextProvider } from './AppContext copy';
@@ -13,12 +12,12 @@ export interface available {value: boolean}
 export const AppContextProvider= ({children}) => {
 	const [spacesList, setSpacesList]= useState (initialSpacesData)
 	const [spaceFeature, setSpaceFeature]= useState ([])
-	const [stateFilter, setStateFilter]= useState("all")
+	const [availableFilter, setAvailableFilter]= useState("all")
 
-	const handleChangeStatus= (id:number, newStatus: boolean)=>{
+	const handleChangeAvailable= (id:number, newAvailable: boolean)=>{
 		const newList= spacesList.map((space)=> {
 			if(space.id===id) {
-				return {...space, status: newStatus}
+				return {...space, state: newAvailable}
 			} 
 			
 			return space;
@@ -36,7 +35,7 @@ export const AppContextProvider= ({children}) => {
 		console.log (newList)
 	}
 	return (
-		<AppContext.Provider value={{spaceList,setSpaceList, handleChangeStatus,handleSpaceFeature,spaceFeature, setSpaceFeature, stateFilter, setStateFilter}}>
+		<AppContext.Provider value={{spacesList,setSpacesList, handleChangeAvailable,handleSpaceFeature,spaceFeature, setSpaceFeature, availableFilter, setAvailableFilter}}>
 			{children}
 		</AppContext.Provider>
 	)

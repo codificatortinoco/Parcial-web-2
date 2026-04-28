@@ -1,17 +1,28 @@
 import { useContext, useEffect, useState } from "react";
 import { SpaceContext } from "../context/AppContext";
-import { spaceCard } from "../components/SpaceCard";
+import { SpaceCard } from "../components/SpaceCard";
 import { useNavigate } from "react-router-dom";
 
 export const EspaciosDashboard = () => {
-    const {spaceList, statusFilter, setStatusFilter}= useContext(SpaceContext)
+    const {spacesList, availableFilter, setAvailableFilter}= useContext(SpaceContext)
     const navigate= useNavigate()
-    const[filteredList, setFilteredList]= useState (spaceList)
+    const[spacefilteredList, setFilteredList]= useState (spaceList)
     useEffect (()=> {
-        if (statusFilter==="all")
-            {setFilteredList (spaceList)} 
-        else if (spaceFilter===true)
-            {setFilteredList(spaceList.filter((space)=>spaceStatus===true))}
+        if (availableFilter==="all")
+            {setFilteredList (spacesList)} 
+        else if (availableFilter===true)
+            {setFilteredList(spacesList.filter((space)=>space.available===true))}
         
-    }, [statusFilter, spaceList])
+    }, [availableFilter, spacesList])
+    return (
+        <>
+        <div>
+            <button onClick={()=>navigate("/Reservas")}>reservas</button>
+            <button onClick={()=>setAvailableFilter (true)}>Filtrar espacios</button>
+
+            { spacefilteredList.map ((space)=>(<SpaceCard key={space.id} space={space}/>))}
+        </div>
+
+        </>
+    )
 }
